@@ -1,0 +1,605 @@
+/* Components: buttons, cards, resource and worker rows, draft cards, the
+   modal, and the effect animations. Seven hues are reserved for the seven
+   button voices so no two action classes ever read the same, and cards and
+   draft tiles each carry their own accent so a row of them reads as a lively,
+   clearly zoned set. */
+
+/* --- Buttons ---------------------------------------------------------- */
+
+.btn {
+  --tint: var(--jade);
+  --tint-bright: var(--jade-bright);
+  --tint-ink: #ffffff;
+  --tint-glow: var(--jade);
+  background: linear-gradient(
+    180deg,
+    var(--tint-bright),
+    var(--tint) 58%,
+    color-mix(in srgb, var(--tint) 80%, #000)
+  );
+  color: var(--tint-ink);
+  border: 1px solid color-mix(in srgb, var(--tint) 55%, #fff);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 -6px 14px rgba(0, 0, 0, 0.14) inset,
+    0 7px 18px color-mix(in srgb, var(--tint-glow) 34%, transparent);
+  padding: 9px 18px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    transform 0.16s var(--ease),
+    box-shadow 0.2s var(--ease),
+    filter 0.2s var(--ease);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+/* A soft shimmer that sweeps across on hover. */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.6s var(--ease);
+  pointer-events: none;
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.07);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4) inset,
+    0 -6px 14px rgba(0, 0, 0, 0.14) inset,
+    0 13px 28px color-mix(in srgb, var(--tint-glow) 44%, transparent);
+}
+.btn:hover:not(:disabled)::after {
+  transform: translateX(130%);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 -4px 10px rgba(0, 0, 0, 0.18) inset,
+    0 4px 12px color-mix(in srgb, var(--tint-glow) 30%, transparent);
+}
+.btn:disabled {
+  background: linear-gradient(180deg, var(--slate-tint), var(--panel-deep));
+  color: var(--faint);
+  border-color: var(--hairline);
+  box-shadow: none;
+  cursor: not-allowed;
+  filter: none;
+}
+.btn:disabled::after {
+  display: none;
+}
+.btn .micon {
+  font-size: 1.15em;
+}
+
+/* One hue per voice so no two button classes repeat a colour. */
+.btn-success {
+  --tint: var(--teal);
+  --tint-bright: var(--teal-bright);
+  --tint-glow: var(--teal);
+}
+.btn-gold {
+  --tint: var(--gold);
+  --tint-bright: var(--gold-bright);
+  --tint-ink: var(--gold-ink);
+  --tint-glow: var(--gold);
+}
+.btn-warning {
+  --tint: var(--amber);
+  --tint-bright: var(--amber-bright);
+  --tint-ink: var(--amber-ink);
+  --tint-glow: var(--amber);
+}
+.btn-danger {
+  --tint: var(--cinnabar);
+  --tint-bright: var(--cinnabar-bright);
+  --tint-glow: var(--cinnabar);
+}
+.btn-grey {
+  --tint: var(--slate);
+  --tint-bright: var(--slate-bright);
+  --tint-glow: var(--slate);
+}
+.btn-utility {
+  --tint: var(--violet);
+  --tint-bright: var(--violet-bright);
+  --tint-glow: var(--violet);
+}
+
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+.btn-nav {
+  min-width: 200px;
+}
+.btn-xl {
+  padding: 16px 34px;
+  font-size: 16px;
+  border-radius: 14px;
+  animation: glowPulse 3.4s ease-in-out infinite;
+}
+
+/* --- Cards ------------------------------------------------------------ */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 12px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--jade-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-raise);
+}
+/* Each card in a row takes its own accent so a set reads as zoned, not
+   repeated. The palette cycles through the spectrum. */
+.card-grid .card:nth-child(6n + 1) {
+  border-top-color: var(--jade-line);
+}
+.card-grid .card:nth-child(6n + 2) {
+  border-top-color: var(--azure-line);
+}
+.card-grid .card:nth-child(6n + 3) {
+  border-top-color: var(--gold-line);
+}
+.card-grid .card:nth-child(6n + 4) {
+  border-top-color: var(--magenta-line);
+}
+.card-grid .card:nth-child(6n + 5) {
+  border-top-color: var(--violet-line);
+}
+.card-grid .card:nth-child(6n + 6) {
+  border-top-color: var(--teal-line);
+}
+.card-header {
+  background: linear-gradient(
+    120deg,
+    var(--jade-ghost),
+    var(--gold-ghost) 55%,
+    var(--azure-ghost)
+  );
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--ink-navy);
+  text-align: center;
+}
+.card-body {
+  padding: 16px;
+  flex: 1;
+}
+.card-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--hairline-soft);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* --- Resource, worker, and inventory rows ---------------------------- */
+
+.resource-row {
+  display: flex;
+  align-items: center;
+  padding: 7px 8px;
+  margin: 4px 0;
+  font-size: 12.5px;
+  border-radius: 8px;
+  transition: background 0.18s var(--ease);
+}
+.resource-row:hover {
+  background: var(--jade-ghost);
+}
+.resource-row .icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+.resource-row .name {
+  font-weight: 600;
+  min-width: var(--resource-name-w);
+}
+.resource-row .qty {
+  margin: 0 8px;
+  color: var(--ink-soft);
+}
+.resource-row .price {
+  color: var(--gold-ink);
+  font-weight: 600;
+  margin-left: auto;
+}
+.resource-row .inv-status {
+  margin-left: 10px;
+  font-size: 11px;
+}
+
+.worker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--white);
+  padding: 9px 12px;
+  margin: 6px 0;
+  border-radius: 10px;
+  border: 1px solid var(--hairline-soft);
+  border-left: 3px solid var(--teal-line);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  box-shadow: var(--shadow-card);
+}
+.worker-row .micon {
+  color: var(--teal-ink);
+}
+
+.inv-item .icon {
+  margin-right: 6px;
+}
+.inv-item .name {
+  flex: 1;
+}
+.inv-item .count {
+  font-weight: 600;
+  min-width: 28px;
+  text-align: right;
+}
+
+.inv-section-title {
+  color: var(--cobalt-ink);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--cobalt-line);
+  margin: 10px 0 6px;
+}
+
+/* --- Hero and welcome ------------------------------------------------- */
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 0.02em;
+  color: var(--ink-navy);
+  text-align: center;
+  margin: 26px 0 8px;
+}
+.hero-title .micon {
+  font-size: 34px;
+  color: var(--gold);
+  vertical-align: -0.15em;
+  margin: 0 6px;
+}
+.subtitle-text {
+  font-size: 15px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 22px;
+  letter-spacing: 0.02em;
+}
+.center-block {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  animation: riseIn 0.6s var(--ease) both;
+}
+.welcome-links {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 14px;
+}
+.welcome-links a {
+  color: var(--violet-ink);
+  text-decoration: none;
+  margin: 0 10px;
+  border-bottom: 1px solid var(--violet-line);
+  transition:
+    color 0.18s var(--ease),
+    border-color 0.18s var(--ease);
+}
+.welcome-links a:hover {
+  color: var(--gold-ink);
+  border-color: var(--gold);
+}
+
+/* --- Modal ------------------------------------------------------------ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 24px;
+  animation: fadeIn 0.3s var(--ease) both;
+}
+/* A modal that is already open reuses this shell; the flag drops the entrance
+   animation so turning tutorial pages does not flash the whole screen. */
+.modal-overlay.noanim,
+.modal.noanim {
+  animation: none;
+}
+.modal {
+  background: linear-gradient(180deg, var(--white), var(--panel-solid));
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  max-width: var(--modal-max-w);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-modal);
+  position: relative;
+  animation: riseIn 0.5s var(--ease) both;
+}
+.modal::before,
+.modal::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--gold);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.modal::before {
+  top: 12px;
+  left: 12px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 10px;
+}
+.modal::after {
+  bottom: 12px;
+  right: 12px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 10px;
+}
+.modal h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.02em;
+  color: var(--ink-navy);
+  margin-bottom: 18px;
+  text-align: center;
+}
+.modal h2 .micon {
+  color: var(--gold);
+  font-size: 24px;
+  vertical-align: -0.12em;
+  margin: 0 6px;
+}
+.modal pre {
+  background: var(--panel-deep);
+  color: var(--ink-soft);
+  padding: 14px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* --- Boon and module draft cards ------------------------------------- */
+
+.boon-card,
+.module-card {
+  background: linear-gradient(180deg, var(--white), var(--panel-deep));
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.22s var(--ease),
+    box-shadow 0.22s var(--ease),
+    border-color 0.22s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+/* A distinct hue per draft tile so the row is a spectrum, not a clone. */
+.card-grid .boon-card:nth-child(3n + 1),
+.card-grid .module-card:nth-child(3n + 1) {
+  border-color: var(--jade-line);
+}
+.card-grid .boon-card:nth-child(3n + 2),
+.card-grid .module-card:nth-child(3n + 2) {
+  border-color: var(--violet-line);
+}
+.card-grid .boon-card:nth-child(3n + 3),
+.card-grid .module-card:nth-child(3n + 3) {
+  border-color: var(--coral-line);
+}
+.boon-card::before,
+.module-card::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 130px;
+  background: radial-gradient(circle, var(--gold-ghost), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.boon-card:hover,
+.module-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: var(--gold);
+  box-shadow: var(--shadow-gold);
+}
+.boon-card:hover::before,
+.module-card:hover::before {
+  opacity: 1;
+}
+.boon-icon,
+.module-icon {
+  font-size: 52px;
+  margin: 8px auto 12px;
+  color: var(--gold);
+  filter: drop-shadow(0 4px 10px rgba(214, 146, 19, 0.35));
+}
+.boon-name,
+.module-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-navy);
+  margin: 8px 0;
+}
+.boon-desc,
+.module-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 10px 0;
+  min-height: 60px;
+}
+
+/* --- Separators and value colors ------------------------------------- */
+
+.separator {
+  height: 1px;
+  margin: 20px 8px;
+  background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+  position: relative;
+}
+.separator::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--panel-solid);
+}
+
+.profit-positive {
+  color: var(--jade-ink);
+  font-weight: 700;
+}
+.profit-negative {
+  color: var(--cinnabar-ink);
+  font-weight: 700;
+}
+
+/* --- Atmosphere and effects ------------------------------------------ */
+
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+
+.shake {
+  animation: shake 0.35s var(--ease);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4px, -3px);
+  }
+  40% {
+    transform: translate(4px, 3px);
+  }
+  60% {
+    transform: translate(-2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.4) inset,
+      0 -6px 14px rgba(0, 0, 0, 0.14) inset,
+      0 8px 22px
+        color-mix(in srgb, var(--tint-glow, var(--gold)) 34%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.5) inset,
+      0 -6px 14px rgba(0, 0, 0, 0.14) inset,
+      0 14px 34px
+        color-mix(in srgb, var(--tint-glow, var(--gold)) 55%, transparent);
+  }
+}

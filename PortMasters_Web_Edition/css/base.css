@@ -1,0 +1,402 @@
+/* Base layer: reset, the porcelain page atmosphere, the glass header, the four
+   panels, and the activity log. The ground is a warm porcelain washed with soft
+   touches of the full spectrum so the screen feels alive, while every panel and
+   section keeps its own quiet accent so the eye always knows where it is. */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background-color: var(--page);
+  background-image:
+    radial-gradient(
+      1100px 600px at 24% -6%,
+      rgba(214, 146, 19, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 520px at 82% 0%,
+      rgba(22, 165, 107, 0.13),
+      transparent 58%
+    ),
+    radial-gradient(
+      820px 500px at 104% 58%,
+      rgba(30, 136, 208, 0.11),
+      transparent 60%
+    ),
+    radial-gradient(
+      820px 520px at -6% 86%,
+      rgba(224, 60, 40, 0.09),
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      var(--page-warm) 0%,
+      var(--page) 46%,
+      var(--page-cool) 100%
+    );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* A faint, fixed wash of auspicious cloud light behind everything. Kept very
+   low so it reads as texture rather than pattern. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(22, 165, 107, 0.05) 0 1px, transparent 1.5px),
+    radial-gradient(rgba(214, 146, 19, 0.045) 0 1px, transparent 1.5px);
+  background-size:
+    28px 28px,
+    28px 28px;
+  background-position:
+    0 0,
+    14px 14px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 64%);
+  mask-image: linear-gradient(180deg, #000, transparent 64%);
+  opacity: 0.55;
+}
+
+/* Custom scrollbars, thin and warm, on both engine families. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--gold-bright), var(--gold));
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--gold-bright), var(--teal-bright));
+  background-clip: content-box;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 14px;
+  min-height: 100vh;
+}
+
+/* Shared glass panel treatment. */
+.glass {
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(9px) saturate(1.1);
+  -webkit-backdrop-filter: blur(9px) saturate(1.1);
+  position: relative;
+  overflow: hidden;
+}
+/* A soft gold hairline along the top edge of every glass panel. */
+.glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(214, 146, 19, 0.55),
+    transparent
+  );
+}
+
+.header {
+  grid-column: 1 / -1;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 254, 251, 0.92),
+    rgba(250, 244, 229, 0.74)
+  );
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-lg);
+  padding: 18px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: var(--shadow-raise);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  position: relative;
+  overflow: hidden;
+  animation: riseIn 0.7s var(--ease) both;
+}
+/* A cinnabar and gold seal wash in the corner of the header. */
+.header::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224, 60, 40, 0.12), transparent 68%);
+  pointer-events: none;
+}
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold) 28%,
+    var(--cinnabar) 50%,
+    var(--jade) 72%,
+    transparent
+  );
+  opacity: 0.6;
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  color: var(--ink-navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header h1 .micon {
+  font-size: 26px;
+  color: var(--gold);
+}
+.header .subtitle {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+}
+.header .subtitle .micon {
+  font-size: 15px;
+  color: var(--jade);
+}
+.header .shortcuts {
+  text-align: right;
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.6;
+  max-width: 46%;
+}
+
+/* A small gilt bead used to separate the header phrases in place of a pipe. */
+.dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 0 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+.status-panel,
+.phase-panel {
+  grid-row: 2;
+  padding: 16px;
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
+}
+/* The main stage is the quietest surface so the coloured content inside it
+   leads the eye. */
+.phase-panel {
+  background: linear-gradient(180deg, var(--panel), rgba(255, 254, 251, 0.6));
+}
+
+/* Each sidebar section claims one hue, so the four read as distinct zones. */
+.status-section {
+  background: var(--panel-deep);
+  border: 1px solid var(--hairline-soft);
+  border-left: 3px solid var(--jade-line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.status-section:last-child {
+  margin-bottom: 0;
+}
+.status-section:nth-child(1) {
+  border-left-color: var(--jade-line);
+  background: linear-gradient(90deg, var(--jade-ghost), var(--panel-deep) 55%);
+}
+.status-section:nth-child(2) {
+  border-left-color: var(--azure-line);
+  background: linear-gradient(90deg, var(--azure-ghost), var(--panel-deep) 55%);
+}
+.status-section:nth-child(3) {
+  border-left-color: var(--gold-line);
+  background: linear-gradient(90deg, var(--gold-ghost), var(--panel-deep) 55%);
+}
+.status-section:nth-child(4) {
+  border-left-color: var(--cinnabar-line);
+  background: linear-gradient(
+    90deg,
+    var(--cinnabar-ghost),
+    var(--panel-deep) 55%
+  );
+}
+.status-section h3 {
+  font-family: var(--font-display);
+  color: var(--ink-navy);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--hairline);
+}
+.status-section h3 .micon {
+  font-size: 17px;
+  color: var(--gold);
+  vertical-align: -0.1em;
+  margin-right: 6px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.stat-row .micon {
+  color: var(--azure-ink);
+  margin-right: 6px;
+}
+.stat-value {
+  font-weight: 600;
+  color: var(--ink);
+}
+.stat-money {
+  color: var(--teal-ink);
+  font-weight: 700;
+  font-size: 15px;
+}
+.stat-score {
+  color: var(--gold-ink);
+}
+
+.inv-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.inv-item .icon {
+  margin-right: 6px;
+}
+.inv-item .name {
+  flex: 1;
+}
+.inv-item .count {
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 30px;
+  text-align: right;
+}
+
+.control-panel {
+  grid-column: 1 / -1;
+  background: linear-gradient(
+    120deg,
+    rgba(40, 48, 74, 0.96),
+    rgba(30, 58, 50, 0.96)
+  );
+  border: 1px solid var(--gold-line);
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  box-shadow: var(--shadow-raise);
+}
+.control-panel .btn {
+  margin: 0;
+}
+
+.log-panel {
+  grid-column: 1 / -1;
+  background: linear-gradient(
+    180deg,
+    var(--slate-tint),
+    rgba(255, 255, 255, 0.5)
+  );
+  border: 1px solid var(--slate-line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  height: 160px;
+  overflow-y: auto;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.log-entry {
+  padding: 3px 6px;
+  border-bottom: 1px dotted var(--hairline-soft);
+  animation: fadeIn 0.3s var(--ease) both;
+}
+
+@media (max-width: 900px) {
+  #app {
+    grid-template-columns: 1fr;
+  }
+  .header h1 {
+    font-size: 24px;
+  }
+  .header .shortcuts {
+    text-align: left;
+    max-width: 100%;
+  }
+  .status-panel,
+  .phase-panel {
+    max-height: 320px;
+  }
+}

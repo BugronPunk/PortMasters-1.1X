@@ -1,0 +1,216 @@
+/* Design tokens.
+   Single source of truth for every color, typeface, and per edition measure.
+   Both editions load this file. The self hosted fonts below keep the game fully
+   offline.
+
+   The colour story is a full, curated spectrum: twelve distinct hues, each
+   with a solid accent, a bright highlight, a soft tint, a hairline, a dark
+   ink, and a translucent ghost. Every kind of widget claims its own hue, so
+   the screen reads as lively and clearly zoned rather than a wash of one
+   colour, while the warm porcelain ground keeps it premium and calm.
+
+   The Chinese edition block at the bottom carries the only values that differ
+   between the English and Chinese builds. */
+
+/* Material Symbol icons, rendered through the self hosted ligature font.
+   Each icon name in the markup resolves to a single glyph. */
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/material-icons.woff2") format("woff2");
+}
+
+/* A refined display serif for the wordmark and section headings, with a calm
+   CJK serif so the Chinese edition keeps the same elegant feel. */
+@font-face {
+  font-family: "Cormorant Display";
+  font-style: normal;
+  font-weight: 300 600;
+  src: url("../fonts/cormorant.woff2") format("woff2");
+}
+
+:root {
+  /* Type and layout measures */
+  --font-display:
+    "Cormorant Display", "Cormorant Garamond", "Songti SC", "Noto Serif SC",
+    "STSong", serif;
+  --font-ui:
+    "Segoe UI", "Roboto", "Helvetica Neue", "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  --font-mono: "Consolas", "SF Mono", ui-monospace, monospace;
+  --resource-name-w: 90px;
+  --modal-max-w: 650px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Surfaces. Warm porcelain whites with a soft glass for panels. */
+  --page: #f6f2ea;
+  --page-warm: #f4eee0;
+  --page-cool: #eef1ec;
+  --panel: rgba(255, 254, 251, 0.74);
+  --panel-solid: #fbf9f3;
+  --panel-deep: #f2ede2;
+  --log-surface: rgba(255, 255, 255, 0.55);
+  --white: #fffdf9;
+  --track: #e7ddc8;
+
+  /* Ink and hairlines. Warm near blacks and soft stones. */
+  --ink: #26241e;
+  --ink-navy: #28304a;
+  --ink-soft: #55503f;
+  --muted: #7b7360;
+  --faint: #a89e89;
+  --hairline: #e3d9c4;
+  --hairline-soft: #ece4d3;
+
+  /* The twelve hue roles. Each is solid, bright, tint, line, ink, ghost. */
+
+  /* jade, the primary action and the success voice */
+  --jade: #16a56b;
+  --jade-bright: #3fc68c;
+  --jade-tint: #d6f2e3;
+  --jade-line: #66cda0;
+  --jade-ink: #0e6e45;
+  --jade-ghost: rgba(22, 165, 107, 0.13);
+
+  /* gold, premium actions and the marquee */
+  --gold: #d69213;
+  --gold-bright: #eab83f;
+  --gold-tint: #f9edc9;
+  --gold-line: #eac46a;
+  --gold-ink: #8a5a0b;
+  --gold-ghost: rgba(214, 146, 19, 0.15);
+
+  /* cinnabar, danger and warnings of risk */
+  --cinnabar: #e03c28;
+  --cinnabar-bright: #f26a52;
+  --cinnabar-tint: #fbede4;
+  --cinnabar-line: #f08e76;
+  --cinnabar-ink: #972314;
+  --cinnabar-ghost: rgba(224, 60, 40, 0.13);
+
+  /* azure, information and water */
+  --azure: #1e88d0;
+  --azure-bright: #55ace2;
+  --azure-tint: #d4eaf8;
+  --azure-line: #7fc0ea;
+  --azure-ink: #155e94;
+  --azure-ghost: rgba(30, 136, 208, 0.13);
+
+  /* cobalt, focus and systems */
+  --cobalt: #3b4ec8;
+  --cobalt-bright: #6e7ce8;
+  --cobalt-tint: #dbe0f8;
+  --cobalt-line: #97a2e6;
+  --cobalt-ink: #26357e;
+  --cobalt-ghost: rgba(59, 78, 200, 0.13);
+
+  /* violet, the special and the utility */
+  --violet: #8e3fd0;
+  --violet-bright: #b572e6;
+  --violet-tint: #ebdcf8;
+  --violet-line: #c896e6;
+  --violet-ink: #5e2688;
+  --violet-ghost: rgba(142, 63, 208, 0.13);
+
+  /* magenta, taxes and emphasis */
+  --magenta: #d02f83;
+  --magenta-bright: #ea6cb0;
+  --magenta-tint: #f9d8ea;
+  --magenta-line: #ee9bc8;
+  --magenta-ink: #8e1b54;
+  --magenta-ghost: rgba(208, 47, 131, 0.13);
+
+  /* teal, growth and the alternate success voice */
+  --teal: #0fa6a0;
+  --teal-bright: #3ec9c2;
+  --teal-tint: #d0f1ef;
+  --teal-line: #6ad4ce;
+  --teal-ink: #0a6e69;
+  --teal-ghost: rgba(15, 166, 160, 0.13);
+
+  /* amber, warm attention */
+  --amber: #ef8a15;
+  --amber-bright: #f7b04a;
+  --amber-tint: #fce8cc;
+  --amber-line: #f5b768;
+  --amber-ink: #9a5409;
+  --amber-ghost: rgba(239, 138, 21, 0.14);
+
+  /* coral, energetic accent */
+  --coral: #f25c2e;
+  --coral-bright: #f88a63;
+  --coral-tint: #fce0d5;
+  --coral-line: #f8a585;
+  --coral-ink: #a8391a;
+  --coral-ghost: rgba(242, 92, 46, 0.13);
+
+  /* lime, a fresh secondary accent */
+  --lime: #a2a613;
+  --lime-bright: #c3c63c;
+  --lime-tint: #f0f0cb;
+  --lime-line: #cbd05e;
+  --lime-ink: #6b6f0c;
+  --lime-ghost: rgba(162, 166, 19, 0.13);
+
+  /* slate, the quiet neutral voice */
+  --slate: #5a6b7c;
+  --slate-bright: #8595a6;
+  --slate-tint: #e5eaee;
+  --slate-line: #a8b4c0;
+  --slate-ink: #394653;
+  --slate-ghost: rgba(90, 107, 124, 0.13);
+
+  /* Phase identity. The four phases keep four signature hues so the cycle is
+     legible at a glance; the fill shades carry white text on the chips. */
+  --phase-1: #16a56b;
+  --phase-2: #1e88d0;
+  --phase-3: #d69213;
+  --phase-4: #e03c28;
+  --phase-1-fill: #0e6e45;
+  --phase-2-fill: #155e94;
+  --phase-3-fill: #8a5a0b;
+  --phase-4-fill: #972314;
+
+  /* Depth and atmosphere. */
+  --shadow-card:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 12px 30px rgba(80, 66, 38, 0.12);
+  --shadow-raise: 0 20px 48px rgba(80, 66, 38, 0.2);
+  --shadow-gold: 0 10px 30px rgba(214, 146, 19, 0.3);
+  --shadow-modal: 0 30px 80px rgba(48, 40, 22, 0.34);
+  --overlay: rgba(30, 27, 21, 0.52);
+
+  /* Motion. */
+  --dur: 0.45s;
+}
+
+/* The Material Symbol icon element. The classic ligature font renders the
+   name as a single glyph; the rest pins down its metrics so it sits cleanly
+   against the body type at whatever size the surrounding rule sets. */
+.micon {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  vertical-align: -0.08em;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+/* Chinese edition: CJK type stacks and the two tighter measures. */
+html:lang(zh-CN) {
+  --font-display: "Songti SC", "Noto Serif SC", "STSong", "SimSun", serif;
+  --font-ui: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  --resource-name-w: 70px;
+  --modal-max-w: 600px;
+}

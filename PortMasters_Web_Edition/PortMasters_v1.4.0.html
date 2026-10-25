@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PortMasters: King of Silk Road</title>
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <div>
+          <h1>
+            <span class="micon">anchor</span> PortMasters
+            <span class="micon">directions_boat</span>
+          </h1>
+          <div class="subtitle">
+            <span class="micon">anchor</span> Maritime Trade
+            <span class="dot"></span>
+            <span class="micon">directions_boat</span> Ship Upgrades
+            <span class="dot"></span> <span class="micon">groups</span> Artisan
+            Crafting <span class="dot"></span>
+            <span class="micon">receipt</span> Taxation
+          </div>
+        </div>
+        <div class="shortcuts">
+          Shortcuts: Ctrl+S Save <span class="dot"></span> Ctrl+N Next Phase
+          <span class="dot"></span> Ctrl+H Manage Artisans
+          <span class="dot"></span> Ctrl+R Restart <span class="dot"></span> F1
+          Help
+        </div>
+      </div>
+
+      <div class="status-panel" id="status-panel"></div>
+      <div class="phase-panel" id="phase-panel"></div>
+
+      <div class="control-panel" id="control-panel"></div>
+      <div class="log-panel" id="log-panel"></div>
+    </div>
+
+    <canvas id="particles-canvas"></canvas>
+    <div id="modal-root"></div>
+
+    <script src="js/lang/en.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/content.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/economy.js"></script>
+    <script src="js/core/actions.js"></script>
+    <script src="js/core/effects.js"></script>
+    <script src="js/ui/render.js"></script>
+    <script src="js/ui/screens.js"></script>
+    <script src="js/ui/modals.js"></script>
+    <script src="js/core/phases.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

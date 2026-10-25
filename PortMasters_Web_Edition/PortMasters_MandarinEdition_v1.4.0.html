@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PortMasters：丝绸之路霸主</title>
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <div>
+          <h1>
+            <span class="micon">anchor</span> PortMasters
+            <span class="micon">directions_boat</span>
+          </h1>
+          <div class="subtitle">
+            <span class="micon">anchor</span> 航海贸易 <span class="dot"></span>
+            <span class="micon">directions_boat</span> 船只升级
+            <span class="dot"></span> <span class="micon">groups</span> 工匠制作
+            <span class="dot"></span>
+            <span class="micon">receipt</span> 税收系统
+          </div>
+        </div>
+        <div class="shortcuts">
+          快捷键：Ctrl+S 保存 <span class="dot"></span> Ctrl+N 下一阶段
+          <span class="dot"></span> Ctrl+H 工匠管理
+          <span class="dot"></span> Ctrl+R 重新开始 <span class="dot"></span> F1
+          帮助
+        </div>
+      </div>
+
+      <div class="status-panel" id="status-panel"></div>
+      <div class="phase-panel" id="phase-panel"></div>
+
+      <div class="control-panel" id="control-panel"></div>
+      <div class="log-panel" id="log-panel"></div>
+    </div>
+
+    <canvas id="particles-canvas"></canvas>
+    <div id="modal-root"></div>
+
+    <script src="js/lang/zh.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/content.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/economy.js"></script>
+    <script src="js/core/actions.js"></script>
+    <script src="js/core/effects.js"></script>
+    <script src="js/ui/render.js"></script>
+    <script src="js/ui/screens.js"></script>
+    <script src="js/ui/modals.js"></script>
+    <script src="js/core/phases.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
