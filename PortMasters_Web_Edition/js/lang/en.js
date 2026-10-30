@@ -33,7 +33,7 @@
     /* Each artisan type needs several name forms: name for the hire and
        dismissal logs, prodName for the production log, short for the status
        list and wage rows, plural for the wage summary line, and statusPlural
-       for the cargo hold. hireIcon and icon carry the matching glyphs. */
+       for the cargo hold. hireIcon carries the matching icon token. */
     workerTypes: {
       weaver: {
         name: "Weaver",
@@ -42,7 +42,6 @@
         plural: "Weavers",
         statusPlural: "Weavers",
         hireIcon: "👩‍🔧",
-        icon: "👩‍🔧",
       },
       master: {
         name: "Master Weaver",
@@ -51,7 +50,6 @@
         plural: "Master Weavers",
         statusPlural: "Master Weavers",
         hireIcon: "👩‍🎨",
-        icon: "👩‍🎨",
       },
       sachet_maker: {
         name: "Sachet Maker",
@@ -59,8 +57,7 @@
         short: "Sachet Maker",
         plural: "Sachet Makers",
         statusPlural: "Sachet Makers",
-        hireIcon: "🌸",
-        icon: "🌸",
+        hireIcon: "[[sachet_maker]]",
       },
     },
 
@@ -337,6 +334,15 @@
         restart: "🔄 Restart",
       },
 
+      phaseRibbon: {
+        setup: "Voyage Setup",
+        purchase: "Port Purchase",
+        trade: "Trade Orders",
+        artisans: "Artisan Work",
+        settlement: "Voyage Settlement",
+        shipyard: "Shipyard",
+      },
+
       welcome: {
         subtitle: "🌊 Eight Voyages await, become the King of Silk Road!",
         continueVoyage: "📂 Continue Voyage",
@@ -365,8 +371,8 @@
         footUpgrade:
           "🚢 Phase 4: upgrade ship → freight discounts + module slots",
         footKeys: "⌨️ Ctrl+S save | Ctrl+N next phase | F1 guide",
-        linkPortmasters2: "🎮 Play PortMasters 2",
-        linkDeveloper: "👤 Developer: Aaron Zhu",
+        linkPortmasters2: "🎮 Try PortMasters 2",
+        linkDeveloper: "👤 Visit Developer",
       },
 
       boon: {
@@ -415,12 +421,13 @@
         hireMasterName: "👩‍🎨 Master Weaver",
         hireMasterDetail:
           ", Linen Clothes, Cotton Clothes or Brocade(3 Silk), ",
-        hireMakerName: "🌸 Sachet Maker",
+        hireMakerName: "[[sachet_maker]] Sachet Maker",
         hireMakerDetail: ", Sachet(1 Silk+2 Tea), ",
         perRound: (wage) => `${wage} Gold/voyage`,
         hireWeaverButton: (cost) => `👩‍🔧 Hire Weaver (${cost}💰/voyage)`,
         hireMasterButton: (cost) => `👩‍🎨 Hire Master Weaver (${cost}💰/voyage)`,
-        hireMakerButton: (cost) => `🌸 Hire Sachet Maker (${cost}💰/voyage)`,
+        hireMakerButton: (cost) =>
+          `[[sachet_maker]] Hire Sachet Maker (${cost} Gold/voyage)`,
         statusTitle: "👥 Artisan Status & Tasks",
         workerLine: (short, n, w) =>
           `${short} ${n}: ${
@@ -637,7 +644,7 @@ ${fmtItems(v.products.slice(2))}
         title: "⚓ Welcome aboard",
         content: `<p>PortMasters puts you on the ancient Silk Road. Eight voyages, limited gold, and a lot of merchants trying to outmaneuver you at every port.</p>
 <p>The rules are easy to pick up, but money is tight early on and a string of bad calls compounds quickly. This covers the four things that catch new players out most.</p>
-<p style="color:#777;font-size:13px">Two minutes to read. Saves a lot of frustrated restarts.</p>`,
+<p style="color:var(--ink-soft);font-size:13px">Two minutes to read. Saves a lot of frustrated restarts.</p>`,
       },
       {
         title: "🏆 What you're playing for",
@@ -654,7 +661,7 @@ ${fmtItems(v.products.slice(2))}
   <div style="background:#f9edc9;border-radius:6px;padding:10px;border-left:3px solid #d69213"><strong>3️⃣ Settle</strong><br><span style="font-size:12px;color:#444">Production lands, bills come due</span></div>
   <div style="background:#f9d8ea;border-radius:6px;padding:10px;border-left:3px solid #d02f83"><strong>4️⃣ Upgrade</strong><br><span style="font-size:12px;color:#444">Improve your ship</span></div>
 </div>
-<p style="font-size:12px;color:#666;margin:4px 0 0"><kbd style="background:#eee;border:1px solid #ccc;padding:1px 6px;border-radius:3px">Ctrl+N</kbd> moves you between phases without clicking.</p>`,
+<p style="font-size:12px;color:var(--ink-soft);margin:4px 0 0"><kbd style="background:#eee;border:1px solid #ccc;padding:1px 6px;border-radius:3px">Ctrl+N</kbd> moves you between phases without clicking.</p>`,
       },
       {
         title: "🏪 Phase 1: Buying",

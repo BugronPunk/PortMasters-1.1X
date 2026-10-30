@@ -7,6 +7,7 @@
   function render() {
     try {
       renderStatus();
+      renderVoyageRibbon();
       renderPhase();
       renderControls();
       renderLog();
@@ -15,12 +16,52 @@
       const p = document.getElementById("phase-panel");
       if (p)
         p.innerHTML =
-          PM.iconize(`<div style="padding:20px; color:#e03c28; background:#3a1410; border:2px solid #e03c28; border-radius:8px; margin:20px; font-family: monospace;">
+          PM.iconize(`<div style="padding:20px; color:var(--danger-weak); background:var(--danger-dark); border:2px solid var(--danger); border-radius:8px; margin:20px; font-family: monospace;">
         <h3>${L.ui.crashTitle}</h3>
         <p>${PM.escapeHtml(err.message)}</p>
         <button class="btn btn-danger" onclick="render()">${L.ui.crashRetry}</button>
       </div>`);
     }
+  }
+
+  function renderVoyageRibbon() {
+    const ribbon = document.getElementById("voyage-ribbon");
+    if (!ribbon) return;
+    const phase = PM.game.phase;
+    const t = L.ui.phaseRibbon;
+    const steps = [
+      { key: "setup", icon: "explore", phases: [0, 5] },
+      { key: "purchase", icon: "storefront", phases: [1] },
+      { key: "artisans", icon: "handyman", phases: ["worker_mgmt"] },
+      { key: "trade", icon: "receipt_long", phases: [2] },
+      { key: "settlement", icon: "account_balance", phases: [3] },
+      {
+        key: "shipyard",
+        icon: "build",
+        phases: [4, "module_draft", "module_swap"],
+      },
+    ];
+    let activeIndex = steps.findIndex((step) => step.phases.includes(phase));
+    if (phase === "endgame" || phase === "bankruptcy")
+      activeIndex = steps.length;
+    if (activeIndex < 0) activeIndex = 0;
+
+    ribbon.innerHTML = steps
+      .map((step, index) => {
+        const state =
+          index < activeIndex
+            ? "is-complete"
+            : index === activeIndex
+              ? "is-active"
+              : "";
+        const current = index === activeIndex ? ' aria-current="step"' : "";
+        const connector =
+          index < steps.length - 1
+            ? '<span class="voyage-connector" aria-hidden="true"></span>'
+            : "";
+        return `<span class="voyage-step ${state}"${current}><span class="micon" aria-hidden="true">${step.icon}</span><span>${t[step.key]}</span></span>${connector}`;
+      })
+      .join("");
   }
 
   /* One cargo row per good: icon, name, and count in the good's own color. */
@@ -63,9 +104,9 @@
         PM.totalArtisans() > 0
           ? `
         <div class="inv-section-title">${t.artisans}</div>
-        <div class="inv-item"><span class="name">👩‍🔧 ${L.workerTypes.weaver.statusPlural}</span><span class="count">${game.weavers.length}</span></div>
-        <div class="inv-item"><span class="name">👩‍🎨 ${L.workerTypes.master.statusPlural}</span><span class="count">${game.masterWeavers.length}</span></div>
-        <div class="inv-item"><span class="name">🌸 ${L.workerTypes.sachet_maker.statusPlural}</span><span class="count">${game.sachetMakers.length}</span></div>
+        <div class="inv-item"><span class="name">${L.workerTypes.weaver.hireIcon} ${L.workerTypes.weaver.statusPlural}</span><span class="count">${game.weavers.length}</span></div>
+        <div class="inv-item"><span class="name">${L.workerTypes.master.hireIcon} ${L.workerTypes.master.statusPlural}</span><span class="count">${game.masterWeavers.length}</span></div>
+        <div class="inv-item"><span class="name">${L.workerTypes.sachet_maker.hireIcon} ${L.workerTypes.sachet_maker.statusPlural}</span><span class="count">${game.sachetMakers.length}</span></div>
       `
           : ""
       }
@@ -82,18 +123,18 @@
       const _safe = game.money >= _pendTotal;
       const _nW = PM.totalArtisans();
       html += `
-    <div class="status-section" style="border-color:${_safe ? "#1e88d0" : "#e03c28"}">
+    <div class="status-section" style="border-color:${_safe ? "var(--info)" : "var(--danger)"}">
       <h3>${t.obligations}</h3>
       <div class="stat-row"><span>${t.maintenance}</span><span class="stat-value">${_pendMaint} ${L.ui.gold}</span></div>
       <div class="stat-row"><span>${t.wages}${_nW > 0 ? t.wageCount(_nW) : ""}</span><span class="stat-value">${_nW > 0 ? _pendWages + " " + L.ui.gold : "0 " + L.ui.gold}</span></div>
       ${_ww > 0 ? `<div class="stat-row" style="font-size:10px;padding-left:10px"><span>${t.wageBreakdown(game.weavers.length, L.workerTypes.weaver.short)}</span><span>${_ww}${t.goldShort}</span></div>` : ""}
       ${_mw > 0 ? `<div class="stat-row" style="font-size:10px;padding-left:10px"><span>${t.wageBreakdown(game.masterWeavers.length, L.workerTypes.master.short)}</span><span>${_mw}${t.goldShort}</span></div>` : ""}
       ${_sw > 0 ? `<div class="stat-row" style="font-size:10px;padding-left:10px"><span>${t.wageBreakdown(game.sachetMakers.length, L.workerTypes.sachet_maker.short)}</span><span>${_sw}${t.goldShort}</span></div>` : ""}
-      <div class="stat-row" style="border-top:1px solid ${_safe ? "#1e88d0" : "#e03c28"};margin-top:4px;padding-top:4px">
+      <div class="stat-row" style="border-top:1px solid ${_safe ? "var(--info)" : "var(--danger)"};margin-top:4px;padding-top:4px">
         <span><strong>${t.totalDue}</strong></span>
-        <span style="font-weight:bold;color:${_safe ? "#16a56b" : "#e03c28"}">${_pendTotal} ${L.ui.gold}</span>
+        <span style="font-weight:bold;color:${_safe ? "var(--primary-dark)" : "var(--danger-ink)"}">${_pendTotal} ${L.ui.gold}</span>
       </div>
-      ${!_safe ? `<div style="background:#e03c28;color:white;border-radius:4px;padding:3px 6px;font-size:10px;margin-top:4px;text-align:center">${t.riskShortfall}</div>` : `<div style="font-size:10px;color:#16a56b;text-align:center;margin-top:4px">${t.fundsSufficient}</div>`}
+      ${!_safe ? `<div style="background:var(--danger);color:var(--ink-surface);border-radius:4px;padding:3px 6px;font-size:10px;margin-top:4px;text-align:center">${t.riskShortfall}</div>` : `<div style="font-size:10px;color:var(--primary-dark);text-align:center;margin-top:4px">${t.fundsSufficient}</div>`}
     </div>`;
     }
     p.innerHTML = PM.iconize(html);
@@ -102,6 +143,7 @@
   function renderPhase() {
     const p = document.getElementById("phase-panel");
     const phase = PM.game.phase;
+    p.scrollTop = 0;
     if (phase === 0) PM.renderWelcome(p);
     else if (phase === 5) PM.renderBoonDraft(p);
     else if (phase === 1) PM.renderPurchase(p);
@@ -149,8 +191,8 @@
     }
 
     c.innerHTML = PM.iconize(`
-    <button class="btn" ${startDisabled ? "disabled" : ""} onclick="${startAction}">${startText}</button>
-    <button class="btn" ${nextDisabled ? "disabled" : ""} onclick="nextPhase()">${nextText}</button>
+    <button class="btn ${startDisabled ? "btn-context" : "btn-primary"}" ${startDisabled ? "disabled" : ""} onclick="${startAction}">${startText}</button>
+    <button class="btn ${nextDisabled ? "btn-context" : "btn-primary"}" ${nextDisabled ? "disabled" : ""} onclick="nextPhase()">${nextText}</button>
     <button class="btn" onclick="showInstructions()">${b.guide}</button>
     <button class="btn btn-success" onclick="saveGame()">${b.save}</button>
     <button class="btn" onclick="restartGame()">${b.restart}</button>`);

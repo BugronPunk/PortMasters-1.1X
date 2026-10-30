@@ -80,18 +80,18 @@
     const t = L.ui.rumor;
     const html = `
     <h2>${t.title}</h2>
-    <div style="text-align:center; color:#1e88d0; margin-bottom:10px">${t.subtitle}</div>
+    <div style="text-align:center; color:var(--info-dark); margin-bottom:10px">${t.subtitle}</div>
     <div style="text-align:center; margin:12px 0">
       <button class="btn btn-gold" onclick="purchaseIntel(); showRumorBoard()">${t.buy(game.intelCost)}</button>
     </div>
-    <div style="background:#d4eaf8; border:2px solid #1e88d0; border-radius:6px; padding:12px; min-height:100px">
+    <div style="background:var(--info-weak); border:2px solid var(--info); border-radius:6px; padding:12px; min-height:100px">
       ${
         game.revealedIntel.length
           ? `
-        <div style="font-weight:bold; color:#1e88d0; margin-bottom:8px">${t.revealedTitle}</div>
+        <div style="font-weight:bold; color:var(--info-dark); margin-bottom:8px">${t.revealedTitle}</div>
         ${game.revealedIntel.map((i) => `<div style="padding:4px 0; font-size:13px">${t.rumorLine(i.port, i.item)}</div>`).join("")}
       `
-          : `<div style="color:#888; text-align:center; padding:20px">${t.empty}</div>`
+          : `<div style="color:var(--ink-soft); text-align:center; padding:20px">${t.empty}</div>`
       }
     </div>
     <div style="text-align:center; margin-top:16px"><button class="btn btn-grey" onclick="closeModal()">${t.close}</button></div>`;
@@ -124,10 +124,10 @@
     <div style="max-width:500px;margin:0 auto;font-family:inherit">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
         <h2 style="margin:0;color:#28304a;font-size:18px;line-height:1.3;flex:1">${s.title}</h2>
-        <button onclick="closeTutorial()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#ccc;padding:0 0 0 12px;line-height:1;flex-shrink:0" title="${t.closeTitle}">✕</button>
+        <button onclick="closeTutorial()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:0 0 0 12px;line-height:1;flex-shrink:0" title="${t.closeTitle}">✕</button>
       </div>
       <div style="background:#e7e0d1;border-radius:3px;height:4px;margin-bottom:18px">
-        <div style="background:#1e88d0;height:4px;border-radius:3px;width:${pct}%;transition:width 0.35s ease"></div>
+        <div style="background:var(--info);height:4px;border-radius:3px;width:${pct}%;transition:width 0.35s ease"></div>
       </div>
       <div style="font-size:14px;line-height:1.7;color:#333;min-height:155px">${tutorialContent(s)}</div>
       <div style="margin-top:18px;padding-top:14px;border-top:1px solid #eee">
@@ -137,7 +137,7 @@
               ${_tutStep === 0 ? "disabled" : ""}
               style="${_tutStep === 0 ? "opacity:0.2;cursor:default;" : ""}padding:8px 16px">${t.back}</button>
           </div>
-          <span style="font-size:12px;color:#aaa;white-space:nowrap;text-align:center">${t.stepOf(_tutStep + 1, total)}</span>
+              <span style="font-size:12px;color:var(--muted);white-space:nowrap;text-align:center">${t.stepOf(_tutStep + 1, total)}</span>
           <div style="text-align:right">
             ${
               isLast
@@ -147,7 +147,7 @@
           </div>
         </div>
         <div style="text-align:center;margin-top:11px">
-          <span onclick="closeTutorial()" style="font-size:12px;color:#bbb;cursor:pointer;text-decoration:underline;text-underline-offset:3px">${t.skip}</span>
+        <span onclick="closeTutorial()" style="font-size:12px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px">${t.skip}</span>
         </div>
       </div>
     </div>`);

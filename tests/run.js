@@ -622,7 +622,7 @@ function effectsSuite() {
    a minus directly in front of a digit is arithmetic (Net: -41 Gold) and is
    the one allowed appearance. */
 
-const DASH_RE = /[-–—]/;
+const DASH_RE = /[\u002D\u2013\u2014]/;
 
 function withoutMinusNumbers(text) {
   return String(text).replace(/-\d/g, "");
@@ -657,6 +657,28 @@ function printedTradeNet(g) {
 
 function verificationSuite() {
   section("verification");
+
+  check("the icon registry assigns one symbol per source glyph", () => {
+    const file = path.join(
+      __dirname,
+      "..",
+      "PortMasters_Web_Edition",
+      "js",
+      "core",
+      "utils.js",
+    );
+    const source = fs.readFileSync(file, "utf8");
+    const start = source.indexOf("const ICON_MAP = {");
+    const end = source.indexOf("};", start);
+    const values = [...source.slice(start, end).matchAll(/:\s*"([^"]+)"/g)].map(
+      (match) => match[1],
+    );
+    assertEqual(
+      values.length,
+      new Set(values).size,
+      "every source glyph has a distinct Material Symbol",
+    );
+  });
 
   check("the welcome screen quotes the engine's own figures", () => {
     const g = freshGame();

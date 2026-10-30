@@ -16,7 +16,7 @@
     const hasSave = !!localStorage.getItem(PM.SAVE_KEY);
     const t = L.ui.welcome;
     p.innerHTML = PM.iconize(`
-    <div class="center-block">
+    <div class="center-block welcome-screen">
       <div class="hero-title">⚓ PortMasters 🚢</div>
       <div class="subtitle-text">${t.subtitle}</div>
       <div style="text-align:center; margin: 20px 0">
@@ -25,23 +25,23 @@
         <br><button class="btn" onclick="showTutorial(0)" style="margin-top:8px;font-size:13px;padding:8px 22px">${t.tutorial}</button>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px auto;text-align:left;max-width:700px">
-        <div style="background:#d6f2e3;border-left:4px solid #16a56b;border-radius:4px;padding:10px">
-          <div style="font-weight:bold;color:#0e6e45;margin-bottom:4px">${t.startTitle}</div>
+        <div style="background:var(--primary-weak);border-left:4px solid var(--primary);border-radius:4px;padding:10px">
+          <div style="font-weight:bold;color:var(--primary-dark);margin-bottom:4px">${t.startTitle}</div>
           <div style="font-size:12px">${t.startGoods}</div>
           <div style="font-size:12px">${t.startFunds}</div>
         </div>
-        <div style="background:#f9edc9;border-left:4px solid #d69213;border-radius:4px;padding:10px">
-          <div style="font-weight:bold;color:#8a5a0b;margin-bottom:4px">${t.delayTitle}</div>
+        <div style="background:var(--warn-weak);border-left:4px solid var(--warn-dark);border-radius:4px;padding:10px">
+          <div style="font-weight:bold;color:var(--warn-ink);margin-bottom:4px">${t.delayTitle}</div>
           <div style="font-size:12px">${t.delayLine}</div>
-          <div style="font-size:11px;color:#8a5a0b">${t.delayNote}</div>
+          <div style="font-size:11px;color:var(--warn-ink)">${t.delayNote}</div>
         </div>
-        <div style="background:#d4eaf8;border-left:4px solid #1e88d0;border-radius:4px;padding:10px">
-          <div style="font-weight:bold;color:#155e94;margin-bottom:4px">${t.costsTitle}</div>
+        <div style="background:var(--info-weak);border-left:4px solid var(--info);border-radius:4px;padding:10px">
+          <div style="font-weight:bold;color:var(--info-ink);margin-bottom:4px">${t.costsTitle}</div>
           <div style="font-size:12px">${t.costsMaintenance}</div>
           <div style="font-size:12px">${t.costsWages}</div>
         </div>
-        <div style="background:#f9d8ea;border-left:4px solid #d02f83;border-radius:4px;padding:10px">
-          <div style="font-weight:bold;color:#8e1b54;margin-bottom:4px">${t.taxesTitle}</div>
+        <div style="background:var(--danger-weak);border-left:4px solid var(--danger);border-radius:4px;padding:10px">
+          <div style="font-weight:bold;color:var(--danger-ink);margin-bottom:4px">${t.taxesTitle}</div>
           <div style="font-size:12px">${t.taxesVat}</div>
           <div style="font-size:12px">${t.taxesIncome}</div>
         </div>
@@ -109,7 +109,7 @@
       );
     }
     p.innerHTML = PM.iconize(`
-    <div class="center-block">
+    <div class="center-block boon-screen">
       <div class="hero-title">${L.ui.boon.title}</div>
       <div class="subtitle-text">${L.ui.boon.subtitle}</div>
       <div class="card-grid">
@@ -133,9 +133,9 @@
     const game = PM.game;
     const t = L.ui.purchase;
     p.innerHTML = PM.iconize(`
-    <div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-        <h2 style="color:#28304a">${t.title}</h2>
+    <div class="phase-screen purchase-screen">
+      <div class="screen-heading">
+        <h2>${t.title}</h2>
         <button class="btn btn-gold" onclick="showRumorBoard()">${t.brokerBoard}</button>
       </div>
       <div class="card-grid">
@@ -160,8 +160,8 @@
                   ${
                     r.materialCost
                       ? `
-                    <div style="font-size:10px; color:#888; padding-left:24px">${t.matCost(r.materialCost, r.materialDetails)}</div>
-                    <div style="font-size:10px; color:#e03c28; padding-left:24px">${t.markup(r.price - r.materialCost, (((r.price - r.materialCost) / r.materialCost) * 100).toFixed(0))}</div>
+                    <div style="font-size:10px; color:var(--muted); padding-left:24px">${t.matCost(r.materialCost, r.materialDetails)}</div>
+                    <div style="font-size:10px; color:var(--danger-ink); padding-left:24px">${t.markup(r.price - r.materialCost, (((r.price - r.materialCost) / r.materialCost) * 100).toFixed(0))}</div>
                   `
                       : ""
                   }
@@ -169,9 +169,9 @@
                   )
                   .join("")}
                 <div class="separator"></div>
-                <div style="color:#e03c28; font-weight:bold; font-size:14px">
+                <div style="color:var(--danger-ink); font-weight:bold; font-size:14px">
                   ${t.total(finalCost)}
-                  ${finalCost < c.totalCost ? `<span style="color:#888; font-size:11px">${t.was(c.totalCost)}</span>` : ""}
+                  ${finalCost < c.totalCost ? `<span style="color:var(--muted); font-size:11px">${t.was(c.totalCost)}</span>` : ""}
                 </div>
               </div>
               <div class="card-footer">
@@ -208,7 +208,7 @@
       <div class="hero-title">${t.title}</div>
       <div class="subtitle-text">${t.subtitle(game.money)}</div>
 
-      <div style="background:#d6f2e3;border:2px solid #16a56b;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px">
+      <div style="background:var(--primary-weak);border:2px solid var(--primary);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px">
         <strong>${t.cycleTitle}</strong>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:6px;text-align:center">
           <div style="background:#0e6e45;color:white;border-radius:4px;padding:4px 2px;font-size:11px">${t.cycleNow}</div>
@@ -219,7 +219,7 @@
         <div style="margin-top:6px;color:#0e6e45">${t.cycleNote}</div>
       </div>
 
-      <div style="background:#d4eaf8; border:2px solid #1e88d0; border-radius:8px; padding:16px; margin:16px 0">
+      <div style="background:var(--info-weak); border:2px solid var(--info); border-radius:8px; padding:16px; margin:16px 0">
         <h3 style="color:#28304a; text-align:center">${t.inventoryTitle}</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:10px">
           <div>
@@ -241,11 +241,11 @@
       <div style="background:#f9edc9;border:2px solid #d69213;border-radius:8px;padding:12px 16px;margin:12px 0">
         <h3 style="color:#8a5a0b;text-align:center;margin-bottom:8px">${t.payrollTitle}</h3>
         <div style="font-size:12px">
-          ${_ww > 0 ? `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${t.payrollLine("👩‍🔧", game.weavers.length, L.workerTypes.weaver.short, PM.WAGES.weaver)}</span><span style="font-weight:bold">${L.money(_ww)}</span></div>` : ""}
-          ${_mw > 0 ? `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${t.payrollLine("👩‍🎨", game.masterWeavers.length, L.workerTypes.master.short, PM.WAGES.master)}</span><span style="font-weight:bold">${L.money(_mw)}</span></div>` : ""}
-          ${_sw > 0 ? `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${t.payrollLine("🌸", game.sachetMakers.length, L.workerTypes.sachet_maker.short, PM.WAGES.sachet_maker)}</span><span style="font-weight:bold">${L.money(_sw)}</span></div>` : ""}
+          ${_ww > 0 ? `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${t.payrollLine(L.workerTypes.weaver.hireIcon, game.weavers.length, L.workerTypes.weaver.short, PM.WAGES.weaver)}</span><span style="font-weight:bold">${L.money(_ww)}</span></div>` : ""}
+          ${_mw > 0 ? `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${t.payrollLine(L.workerTypes.master.hireIcon, game.masterWeavers.length, L.workerTypes.master.short, PM.WAGES.master)}</span><span style="font-weight:bold">${L.money(_mw)}</span></div>` : ""}
+          ${_sw > 0 ? `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${t.payrollLine(L.workerTypes.sachet_maker.hireIcon, game.sachetMakers.length, L.workerTypes.sachet_maker.short, PM.WAGES.sachet_maker)}</span><span style="font-weight:bold">${L.money(_sw)}</span></div>` : ""}
           <div style="display:flex;justify-content:space-between;border-top:1px solid #d69213;padding-top:4px;margin-top:4px;font-weight:bold">
-            <span>${t.totalWages}</span><span style="color:#e03c28">${L.money(_totalWages)}</span>
+            <span>${t.totalWages}</span><span style="color:var(--danger-ink)">${L.money(_totalWages)}</span>
           </div>
         </div>
       </div>
@@ -293,7 +293,7 @@
     const t = L.ui.workers;
     return `
     <div style="margin:12px 0">
-      <strong style="color:#26357e">${info.icon} ${info.plural}: ${t.count(list.length)}</strong>
+      <strong style="color:#26357e">${info.hireIcon} ${info.plural}: ${t.count(list.length)}</strong>
       ${list
         .map(
           (w, i) => `
@@ -357,11 +357,11 @@
                     </div>`;
                   })
                   .join("")}
-                <div style="font-size:11px; color:#e03c28; margin-top:6px">${t.freight(transport)}</div>
+                <div style="font-size:11px; color:var(--danger-ink); margin-top:6px">${t.freight(transport)}</div>
                 <div class="${netProfit >= 0 ? "profit-positive" : "profit-negative"}" style="font-size:13px; margin-top:4px">
                   ${t.reward(o.reward, netProfit)}
                 </div>
-                ${o.isProductOrder ? `<div style="font-size:10px; color:#666">${t.estVat(totalVat)}</div>` : ""}
+                ${o.isProductOrder ? `<div style="font-size:10px; color:var(--muted)">${t.estVat(totalVat)}</div>` : ""}
               </div>
               <div class="card-footer">
                 <button class="btn ${canComplete && !completed ? "" : "btn-grey"}" style="width:100%"
@@ -390,14 +390,14 @@
     <div class="center-block">
       <div class="hero-title">${t.title}</div>
 
-      <div style="background:#d6f2e3;border:2px solid #16a56b;border-radius:8px;padding:14px;margin:14px 0">
+      <div style="background:var(--primary-weak);border:2px solid var(--primary);border-radius:8px;padding:14px;margin:14px 0">
         <h3 style="color:#0e6e45;margin-bottom:8px">${t.processedTitle}</h3>
         <div style="display:flex;justify-content:space-between;font-size:13px;padding:3px 0">
-          <span>${t.production}</span><span style="color:#16a56b;font-weight:bold">${t.done}</span>
+          <span>${t.production}</span><span style="color:var(--primary-dark);font-weight:bold">${t.done}</span>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:13px;padding:3px 0">
           <span>${t.wagesPaid(nWorkers)}</span>
-          <span style="color:#e03c28;font-weight:bold">${L.money(game.workerWages)}</span>
+          <span style="color:var(--danger-ink);font-weight:bold">${L.money(game.workerWages)}</span>
         </div>
       </div>
 
@@ -406,14 +406,14 @@
         <div style="display:flex;justify-content:space-between;font-size:14px;padding:3px 0">
           <span>${t.maintenanceFee}</span><span style="color:#d69213;font-weight:bold">${L.money(cost)}</span>
         </div>
-        ${game.maintenancePenalty > 0 ? `<div style="font-size:11px;color:#888;padding-left:10px">${t.penaltyNote(game.fixedCost, game.maintenancePenalty)}</div>` : ""}
+        ${game.maintenancePenalty > 0 ? `<div style="font-size:11px;color:var(--muted);padding-left:10px">${t.penaltyNote(game.fixedCost, game.maintenancePenalty)}</div>` : ""}
       </div>
 
-      <div style="background:#d4eaf8;border:2px solid #1e88d0;border-radius:8px;padding:14px;margin:14px 0">
+      <div style="background:var(--info-weak);border:2px solid var(--info);border-radius:8px;padding:14px;margin:14px 0">
         <h3 style="color:#28304a;margin-bottom:8px">${t.balanceTitle}</h3>
-        <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0"><span>${t.currentFunds}</span><span style="color:#16a56b;font-weight:bold">${L.money(game.money)}</span></div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0"><span>${t.afterMaintenance}</span><span style="font-weight:bold;color:${balanceAfter >= 0 ? "#1e88d0" : "#e03c28"}">${L.money(balanceAfter)}</span></div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0"><span>${t.roundRevenue}</span><span style="color:#16a56b">+${L.money(game.roundRevenue)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0"><span>${t.currentFunds}</span><span style="color:var(--primary-dark);font-weight:bold">${L.money(game.money)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0"><span>${t.afterMaintenance}</span><span style="font-weight:bold;color:${balanceAfter >= 0 ? "var(--info-dark)" : "var(--danger-ink)"}">${L.money(balanceAfter)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0"><span>${t.roundRevenue}</span><span style="color:var(--primary-dark)">+${L.money(game.roundRevenue)}</span></div>
       </div>
 
       <div class="separator"></div>
@@ -438,7 +438,7 @@
     <div class="center-block">
       <div class="hero-title">${t.title}</div>
       <div class="separator"></div>
-      <div style="background:#d4eaf8; border:3px solid #1e88d0; border-radius:8px; padding:20px; margin:20px 0">
+      <div style="background:var(--info-weak); border:3px solid var(--info); border-radius:8px; padding:20px; margin:20px 0">
         <div style="font-size:16px; font-weight:bold; color:#28304a">${t.shipLevel(game.shipLevel, game.shipLevel * 5)}</div>
         <div style="font-size:14px; color:#155e94; margin-top:6px">${t.moduleSlots(game.equippedModules.length, game.shipLevel)}</div>
         ${
@@ -448,14 +448,14 @@
             ${game.equippedModules.map((m) => `<div style="font-size:12px; padding:3px 0">${m.icon} <strong>${m.name}</strong>: ${m.desc}</div>`).join("")}
           </div>
         `
-            : `<div style="font-size:12px; color:#666; margin-top:8px">${t.noModules}</div>`
+            : `<div style="font-size:12px; color:var(--muted); margin-top:8px">${t.noModules}</div>`
         }
       </div>
       <div style="display:flex; flex-direction:column; gap:8px">
         ${
           canUpgrade
             ? `
-          <button class="btn ${affordable ? "" : "btn-grey"} btn-lg" ${!affordable ? "disabled" : ""} onclick="upgradeShip()">
+          <button class="btn ${affordable ? "btn-gold" : "btn-grey"} btn-lg" ${!affordable ? "disabled" : ""} onclick="upgradeShip()">
             ${t.upgrade(game.shipLevel + 1, upgCost)}
           </button>`
             : ""
@@ -512,16 +512,16 @@
     const t = L.ui.moduleSwap;
     p.innerHTML = PM.iconize(`
     <div class="center-block">
-      <div class="hero-title" style="color:#e03c28">${t.title}</div>
+      <div class="hero-title" style="color:var(--danger-ink)">${t.title}</div>
       <div class="subtitle-text">${t.newModule(game._newModule.icon, game._newModule.name, game._newModule.desc)}</div>
-      <div style="background:#d4eaf8; border:2px solid #1e88d0; border-radius:8px; padding:16px; margin:20px 0">
+      <div style="background:var(--info-weak); border:2px solid var(--info); border-radius:8px; padding:16px; margin:20px 0">
         ${game.equippedModules
           .map(
             (m, i) => `
           <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:white; border-radius:4px; margin:6px 0">
             <div>
               <strong>${m.icon} ${m.name}</strong>
-              <div style="font-size:11px; color:#666">${m.desc}</div>
+              <div style="font-size:11px; color:var(--muted)">${m.desc}</div>
             </div>
             <button class="btn btn-danger" onclick="equipModuleAt(${i})">${t.replace}</button>
           </div>
@@ -541,7 +541,7 @@
     p.innerHTML = PM.iconize(`
     <div class="center-block" style="text-align:center">
       <div style="font-size:80px">💥</div>
-      <div class="hero-title" style="color:#e03c28">${t.title}</div>
+      <div class="hero-title" style="color:var(--danger-ink)">${t.title}</div>
       <div class="subtitle-text">${game.money <= 0 ? t.reasonDepleted : t.reasonShortfall}</div>
       <div class="separator"></div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:400px; margin:20px auto; text-align:left">
@@ -566,8 +566,8 @@
     p.innerHTML = PM.iconize(`
     <div class="center-block" style="text-align:center">
       <div class="hero-title">${t.title}</div>
-      <div style="font-size:22px; font-weight:bold; color:#1e88d0; margin:20px 0">${t.finalReputation(game.score)}</div>
-      <div style="font-size:20px; color:#16a56b; margin:10px 0">${t.finalFunds(game.money)}</div>
+      <div style="font-size:22px; font-weight:bold; color:var(--info-dark); margin:20px 0">${t.finalReputation(game.score)}</div>
+      <div style="font-size:20px; color:var(--primary-dark); margin:10px 0">${t.finalFunds(game.money)}</div>
       <div style="font-size:20px; color:#eab83f; margin:20px 0">${t.rank(rating)}</div>
       <div class="separator"></div>
       <button class="btn btn-xl" onclick="restartGame()">${t.restart}</button>

@@ -29,7 +29,7 @@
     /* Each artisan type needs several name forms: name for the hire and
        dismissal logs, prodName for the production log, short for the status
        list and wage rows, plural for the wage summary line, and statusPlural
-       for the cargo hold. hireIcon and icon carry the matching glyphs. */
+       for the cargo hold. hireIcon carries the matching icon token. */
     workerTypes: {
       weaver: {
         name: "织女",
@@ -38,7 +38,6 @@
         plural: "织女",
         statusPlural: "织女",
         hireIcon: "👩‍🔧",
-        icon: "👩‍🔧",
       },
       master: {
         name: "纺织大师",
@@ -47,7 +46,6 @@
         plural: "纺织大师",
         statusPlural: "纺织大师",
         hireIcon: "👩‍🎨",
-        icon: "👩‍🎨",
       },
       sachet_maker: {
         name: "香囊师",
@@ -55,8 +53,7 @@
         short: "香囊师",
         plural: "香囊师",
         statusPlural: "香囊师",
-        hireIcon: "🌸",
-        icon: "🌸",
+        hireIcon: "[[sachet_maker]]",
       },
     },
 
@@ -326,6 +323,15 @@
         restart: "🔄 重新起航",
       },
 
+      phaseRibbon: {
+        setup: "航程准备",
+        purchase: "港口采购",
+        trade: "贸易订单",
+        artisans: "工匠作坊",
+        settlement: "航程结算",
+        shipyard: "船坞升级",
+      },
+
       welcome: {
         subtitle: "🌊 历经八次航程，成为丝绸之路霸主！",
         continueVoyage: "📂 继续航行",
@@ -353,7 +359,7 @@
         footUpgrade: "🚢 阶段4升级船只：运费折扣 + 解锁模块槽",
         footKeys: "⌨️ Ctrl+S 保存 | Ctrl+N 下一阶段 | F1 帮助",
         linkPortmasters2: "🎮 试玩《港口大师 2》",
-        linkDeveloper: "👤 开发者：Aaron Zhu",
+        linkDeveloper: "👤 访问开发者页面",
       },
 
       boon: {
@@ -399,12 +405,13 @@
         hireWeaverDetail: "，麻衣(2麻布) 或 布衣(2麻布+1丝绸)，",
         hireMasterName: "👩‍🎨 纺织大师",
         hireMasterDetail: "，麻衣、布衣 或 绫罗绸缎(3丝绸)，",
-        hireMakerName: "🌸 香囊师",
+        hireMakerName: "[[sachet_maker]] 香囊师",
         hireMakerDetail: "，香囊(1丝绸+2茶叶)，",
         perRound: (wage) => `${wage}金币/航程`,
         hireWeaverButton: (cost) => `👩‍🔧 雇佣织女 (${cost}💰/航程)`,
         hireMasterButton: (cost) => `👩‍🎨 雇佣纺织大师 (${cost}💰/航程)`,
-        hireMakerButton: (cost) => `🌸 雇佣香囊师 (${cost}💰/航程)`,
+        hireMakerButton: (cost) =>
+          `[[sachet_maker]] 雇佣香囊师 (${cost}金币/航程)`,
         statusTitle: "👥 工匠状态与任务分配",
         workerLine: (short, n, w) =>
           `${short}${n}: ${
@@ -616,7 +623,7 @@
         title: "⚓ 欢迎登船",
         content: `<p>PortMasters 把你放在古丝绸之路上。八次航程，有限的本钱，还有一堆商人跟你抢最好的货源。</p>
 <p>规则不难上手，但前期资金紧张，几个错误决定就可能一路失控。这里专门讲新手最容易踩到的几个坑。</p>
-<p style="color:#777;font-size:13px">大概两分钟读完，省下很多头疼的重来。</p>`,
+<p style="color:var(--ink-soft);font-size:13px">大概两分钟读完，省下很多头疼的重来。</p>`,
       },
       {
         title: "🏆 你在玩什么",
@@ -633,7 +640,7 @@
   <div style="background:#f9edc9;border-radius:6px;padding:10px;border-left:3px solid #d69213"><strong>3️⃣ 结算</strong><br><span style="font-size:12px;color:#444">工匠产出，账单一起来</span></div>
   <div style="background:#f9d8ea;border-radius:6px;padding:10px;border-left:3px solid #d02f83"><strong>4️⃣ 升级</strong><br><span style="font-size:12px;color:#444">在船坞强化船只</span></div>
 </div>
-<p style="font-size:12px;color:#666;margin:4px 0 0">按 <kbd style="background:#eee;border:1px solid #ccc;padding:1px 6px;border-radius:3px">Ctrl+N</kbd> 可以快速跳到下一阶段。</p>`,
+<p style="font-size:12px;color:var(--ink-soft);margin:4px 0 0">按 <kbd style="background:#eee;border:1px solid #ccc;padding:1px 6px;border-radius:3px">Ctrl+N</kbd> 可以快速跳到下一阶段。</p>`,
       },
       {
         title: "🏪 阶段1：采购",

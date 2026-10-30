@@ -52,10 +52,10 @@
     hemp: "🧶",
     silk: "👘",
     tea: "🍵",
-    linen_clothes: "👔",
+    linen_clothes: "[[linen_cloth]]",
     cotton_clothes: "👕",
     brocade: "👗",
-    sachet: "🌸",
+    sachet: "[[sachet_maker]]",
   };
 
   const COLOR_TABLE = {
