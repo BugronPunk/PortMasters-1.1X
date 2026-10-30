@@ -1,7 +1,8 @@
-/* Base layer: reset, the porcelain page atmosphere, the glass header, the four
-   panels, and the activity log. The ground is a warm porcelain washed with soft
-   touches of the full spectrum so the screen feels alive, while every panel and
-   section keeps its own quiet accent so the eye always knows where it is. */
+/* Base layer: reset, the paper page atmosphere, the glass header, the four
+   panels, and the activity log. The ground is a warm wash of paper so every
+   panel sits on a clean surface, and a single hero accent keeps the eye
+   oriented. Depth comes from soft shadows and thin hairlines rather than from
+   decoration, which is what lets the coloured item glyphs carry the life. */
 
 * {
   box-sizing: border-box;
@@ -17,34 +18,12 @@ body {
 body {
   font-family: var(--font-ui);
   color: var(--ink);
-  background-color: var(--page);
+  background-color: var(--bg);
   background-image:
-    radial-gradient(
-      1100px 600px at 24% -6%,
-      rgba(214, 146, 19, 0.15),
-      transparent 60%
-    ),
-    radial-gradient(
-      900px 520px at 82% 0%,
-      rgba(22, 165, 107, 0.13),
-      transparent 58%
-    ),
-    radial-gradient(
-      820px 500px at 104% 58%,
-      rgba(30, 136, 208, 0.11),
-      transparent 60%
-    ),
-    radial-gradient(
-      820px 520px at -6% 86%,
-      rgba(224, 60, 40, 0.09),
-      transparent 62%
-    ),
-    linear-gradient(
-      180deg,
-      var(--page-warm) 0%,
-      var(--page) 46%,
-      var(--page-cool) 100%
-    );
+    radial-gradient(1000px 520px at 20% -8%, var(--bg-glow-1), transparent 62%),
+    radial-gradient(900px 520px at 84% 0%, var(--bg-glow-2), transparent 60%),
+    radial-gradient(820px 520px at 108% 60%, var(--bg-glow-3), transparent 62%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg) 55%, var(--bg-2) 100%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   overflow-x: hidden;
@@ -52,32 +31,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* A faint, fixed wash of auspicious cloud light behind everything. Kept very
-   low so it reads as texture rather than pattern. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    radial-gradient(rgba(22, 165, 107, 0.05) 0 1px, transparent 1.5px),
-    radial-gradient(rgba(214, 146, 19, 0.045) 0 1px, transparent 1.5px);
-  background-size:
-    28px 28px,
-    28px 28px;
-  background-position:
-    0 0,
-    14px 14px;
-  -webkit-mask-image: linear-gradient(180deg, #000, transparent 64%);
-  mask-image: linear-gradient(180deg, #000, transparent 64%);
-  opacity: 0.55;
-}
-
-/* Custom scrollbars, thin and warm, on both engine families. */
+/* Custom scrollbars, thin and warm. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--gold) transparent;
+  scrollbar-color: var(--primary-weak) transparent;
 }
 *::-webkit-scrollbar {
   width: 10px;
@@ -87,13 +44,13 @@ body::before {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--gold-bright), var(--gold));
+  background: linear-gradient(var(--primary-bright), var(--primary-dark));
   border-radius: 999px;
   border: 3px solid transparent;
   background-clip: content-box;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(var(--gold-bright), var(--teal-bright));
+  background: linear-gradient(var(--primary-bright), var(--primary));
   background-clip: content-box;
 }
 
@@ -102,75 +59,60 @@ body::before {
   z-index: 1;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 14px;
+  padding: 16px;
   display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: auto 1fr auto auto;
-  gap: 14px;
-  min-height: 100vh;
+  grid-template-columns: minmax(220px, 276px) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 16px;
+  min-height: calc(100vh - 32px);
+  height: calc(100vh - 32px);
 }
 
-/* Shared glass panel treatment. */
+/* Shared glass panel treatment. Clean surfaces with a soft shadow and a thin
+   hairline, plus a single top hairline of light so the edge reads without
+   clutter. */
 .glass {
-  background: var(--panel);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  backdrop-filter: blur(9px) saturate(1.1);
-  -webkit-backdrop-filter: blur(9px) saturate(1.1);
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
 }
-/* A soft gold hairline along the top edge of every glass panel. */
 .glass::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 18px;
-  right: 18px;
+  left: 20px;
+  right: 20px;
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(214, 146, 19, 0.55),
+    rgba(210, 154, 26, 0.5),
     transparent
   );
 }
 
+/* The header sits on a light glass card and reads as an editorial masthead. */
 .header {
   grid-column: 1 / -1;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 254, 251, 0.92),
-    rgba(250, 244, 229, 0.74)
-  );
-  border: 1px solid var(--gold-line);
-  border-radius: var(--radius-lg);
-  padding: 18px 26px;
-  display: flex;
-  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-md);
+  padding: 14px 20px 12px;
+  display: grid;
+  grid-template-columns: minmax(190px, 0.9fr) minmax(320px, 1.5fr) auto;
+  justify-content: stretch;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  box-shadow: var(--shadow-raise);
-  backdrop-filter: blur(12px) saturate(1.15);
-  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  min-width: 0;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
-  animation: riseIn 0.7s var(--ease) both;
+  animation: riseIn var(--dur-slow) var(--ease) both;
 }
-/* A cinnabar and gold seal wash in the corner of the header. */
-.header::before {
-  content: "";
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(224, 60, 40, 0.12), transparent 68%);
-  pointer-events: none;
-}
+/* A single thin gilt rule along the bottom edge anchors the masthead. */
 .header::after {
   content: "";
   position: absolute;
@@ -180,45 +122,106 @@ body::before {
   height: 2px;
   background: linear-gradient(
     90deg,
-    transparent,
-    var(--gold) 28%,
-    var(--cinnabar) 50%,
-    var(--jade) 72%,
-    transparent
+    var(--primary),
+    var(--accent) 45%,
+    var(--accent-dark) 60%,
+    var(--primary)
   );
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .header h1 {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 30px;
+  font-size: 27px;
   letter-spacing: 0.02em;
-  color: var(--ink-navy);
+  color: var(--ink-strong);
   display: flex;
   align-items: center;
   gap: 10px;
 }
 .header h1 .micon {
-  font-size: 26px;
-  color: var(--gold);
+  font-size: 24px;
+  color: var(--accent);
 }
 .header .subtitle {
-  margin-top: 4px;
+  margin-top: 3px;
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: 12px;
   letter-spacing: 0.01em;
 }
 .header .subtitle .micon {
-  font-size: 15px;
-  color: var(--jade);
+  font-size: 14px;
+  color: var(--primary);
+  margin-right: 5px;
 }
 .header .shortcuts {
   text-align: right;
-  color: var(--ink-soft);
+  color: var(--muted);
   font-size: 11px;
   line-height: 1.6;
-  max-width: 46%;
+  max-width: 220px;
+  justify-self: end;
+}
+
+.brand-block {
+  min-width: 0;
+}
+
+.voyage-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  color: var(--muted);
+}
+
+.voyage-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--r-xs);
+  font-size: 11px;
+  white-space: nowrap;
+  transition:
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.voyage-step .micon {
+  color: var(--faint);
+  font-size: 15px;
+}
+
+.voyage-step.is-complete {
+  color: var(--primary-dark);
+}
+
+.voyage-step.is-complete .micon {
+  color: var(--primary);
+}
+
+.voyage-step.is-active {
+  color: var(--ink-strong);
+  background: var(--accent-tint);
+  border-color: var(--accent-weak);
+  box-shadow: inset 0 -2px 0 var(--accent);
+  font-weight: 700;
+}
+
+.voyage-step.is-active .micon {
+  color: var(--accent-dark);
+}
+
+.voyage-connector {
+  width: clamp(12px, 2vw, 32px);
+  height: 1px;
+  flex: 0 1 32px;
+  background: var(--chart-line-strong);
 }
 
 /* A small gilt bead used to separate the header phrases in place of a pipe. */
@@ -226,104 +229,91 @@ body::before {
   display: inline-block;
   width: 4px;
   height: 4px;
-  margin: 0 8px;
+  margin: 0 9px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--accent);
   vertical-align: middle;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
+/* The sidebar holds the standing status cards; the main stage holds the phase
+   content. Both scroll independently and keep a quiet neutral surface so the
+   coloured content inside leads the eye. */
 .status-panel,
 .phase-panel {
   grid-row: 2;
   padding: 16px;
   overflow-y: auto;
-  max-height: calc(100vh - 250px);
+  min-height: 0;
+  max-height: none;
+  scrollbar-gutter: stable;
 }
-/* The main stage is the quietest surface so the coloured content inside it
-   leads the eye. */
 .phase-panel {
-  background: linear-gradient(180deg, var(--panel), rgba(255, 254, 251, 0.6));
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  scroll-padding-top: 20px;
 }
 
-/* Each sidebar section claims one hue, so the four read as distinct zones. */
+/* Each sidebar section is a compact card with its own accent bar so the four
+   read as distinct zones without painting the whole surface. */
 .status-section {
-  background: var(--panel-deep);
-  border: 1px solid var(--hairline-soft);
-  border-left: 3px solid var(--jade-line);
-  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--hair-soft);
+  border-radius: var(--r-sm);
   padding: 12px 14px;
   margin-bottom: 12px;
-}
-.status-section:last-child {
-  margin-bottom: 0;
-}
-.status-section:nth-child(1) {
-  border-left-color: var(--jade-line);
-  background: linear-gradient(90deg, var(--jade-ghost), var(--panel-deep) 55%);
-}
-.status-section:nth-child(2) {
-  border-left-color: var(--azure-line);
-  background: linear-gradient(90deg, var(--azure-ghost), var(--panel-deep) 55%);
-}
-.status-section:nth-child(3) {
-  border-left-color: var(--gold-line);
-  background: linear-gradient(90deg, var(--gold-ghost), var(--panel-deep) 55%);
-}
-.status-section:nth-child(4) {
-  border-left-color: var(--cinnabar-line);
-  background: linear-gradient(
-    90deg,
-    var(--cinnabar-ghost),
-    var(--panel-deep) 55%
-  );
+  border-left: 3px solid var(--chart-line-strong);
 }
 .status-section h3 {
   font-family: var(--font-display);
-  color: var(--ink-navy);
+  color: var(--ink-strong);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
   padding-bottom: 6px;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hair);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .status-section h3 .micon {
-  font-size: 17px;
-  color: var(--gold);
-  vertical-align: -0.1em;
-  margin-right: 6px;
+  font-size: 16px;
+  color: var(--accent);
 }
 
 .stat-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
+  padding: 4px 0;
   font-size: 12.5px;
   color: var(--ink-soft);
 }
 .stat-row .micon {
-  color: var(--azure-ink);
-  margin-right: 6px;
+  color: var(--info-ink);
+  margin-right: 5px;
 }
 .stat-value {
   font-weight: 600;
   color: var(--ink);
 }
 .stat-money {
-  color: var(--teal-ink);
+  color: var(--primary-dark);
   font-weight: 700;
   font-size: 15px;
 }
 .stat-score {
-  color: var(--gold-ink);
+  color: var(--accent-dark);
+  font-weight: 700;
 }
 
 .inv-item {
   display: flex;
   align-items: center;
-  padding: 4px 0;
+  padding: 3px 0;
   font-size: 12px;
   color: var(--ink-soft);
 }
@@ -342,19 +332,15 @@ body::before {
 
 .control-panel {
   grid-column: 1 / -1;
-  background: linear-gradient(
-    120deg,
-    rgba(40, 48, 74, 0.96),
-    rgba(30, 58, 50, 0.96)
-  );
-  border: 1px solid var(--gold-line);
-  padding: 12px 16px;
-  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  padding: 10px 12px;
+  border-radius: var(--r-md);
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  box-shadow: var(--shadow-raise);
+  box-shadow: var(--shadow-sm);
 }
 .control-panel .btn {
   margin: 0;
@@ -362,41 +348,108 @@ body::before {
 
 .log-panel {
   grid-column: 1 / -1;
-  background: linear-gradient(
-    180deg,
-    var(--slate-tint),
-    rgba(255, 255, 255, 0.5)
-  );
-  border: 1px solid var(--slate-line);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  height: 160px;
+  background: var(--surface-2);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  height: 84px;
   overflow-y: auto;
   font-size: 12px;
   font-family: var(--font-mono);
   color: var(--ink-soft);
-  line-height: 1.55;
+  line-height: 1.6;
+  box-shadow: var(--shadow-xs);
 }
 
 .log-entry {
   padding: 3px 6px;
-  border-bottom: 1px dotted var(--hairline-soft);
-  animation: fadeIn 0.3s var(--ease) both;
+  border-bottom: 1px dotted var(--hair-soft);
+  animation: fadeIn var(--dur-fast) var(--ease) both;
 }
 
 @media (max-width: 900px) {
   #app {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto minmax(420px, auto) auto auto;
+    height: auto;
+    min-height: 100vh;
+  }
+  .header {
+    grid-template-columns: 1fr;
+  }
+  .voyage-ribbon {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
   }
   .header h1 {
-    font-size: 24px;
+    font-size: 23px;
   }
   .header .shortcuts {
     text-align: left;
     max-width: 100%;
+    justify-self: start;
   }
   .status-panel,
   .phase-panel {
-    max-height: 320px;
+    max-height: none;
+  }
+  .status-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 10px;
+  }
+  .status-section {
+    margin-bottom: 0;
+  }
+  .phase-panel {
+    min-height: 420px;
+  }
+  .control-panel {
+    position: sticky;
+    bottom: 8px;
+    z-index: 5;
+  }
+}
+
+@media (max-width: 540px) {
+  #app {
+    padding: 10px;
+    gap: 10px;
+    grid-template-rows: auto auto minmax(440px, auto) auto auto;
+  }
+  .header {
+    padding: 12px 14px 10px;
+  }
+  .header .subtitle {
+    font-size: 11px;
+  }
+  .voyage-step {
+    padding-inline: 7px;
+    font-size: 10px;
+  }
+  .voyage-step .micon {
+    display: none;
+  }
+  .status-panel,
+  .phase-panel {
+    padding: 10px;
+  }
+  .status-panel {
+    display: block;
+  }
+  .status-section {
+    margin-bottom: 10px;
+  }
+  .control-panel {
+    gap: 6px;
+  }
+  .control-panel .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-inline: 10px;
+  }
+  .log-panel {
+    height: 96px;
   }
 }
